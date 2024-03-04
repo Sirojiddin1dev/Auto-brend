@@ -15,38 +15,38 @@ class User(AbstractUser):
 
     class Meta(AbstractUser.Meta):
         swappable = 'AUTH_USER_MODEL'
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
+        verbose_name = 'Foydalanuvchi'
+        verbose_name_plural = 'Foydalanuvchilar'
 
     def __str__(self):
         return self.username
 
 
 class Car(models.Model):
-    make = models.CharField(max_length=255, verbose_name='make')
-    model = models.CharField(max_length=255, )
-    engine_type = models.CharField(max_length=255)
-    transmission = models.CharField(max_length=50)
-    fuel_type = models.CharField(max_length=50)
-    year = models.IntegerField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    brand = models.ForeignKey(to='Brand', on_delete=models.CASCADE)
+    make = models.CharField(max_length=255, verbose_name='Ishlab chiqaruvchi')
+    model = models.CharField(max_length=255, verbose_name='Model')
+    engine_type = models.CharField(max_length=255, verbose_name='Dvigatel turi')
+    img = models.ImageField(upload_to='car_img/', verbose_name='Avtomobil surati')
+    fuel_type = models.CharField(max_length=50, verbose_name='Yoritqich turi')
+    year = models.IntegerField(verbose_name='Ishlab chiqarilgan yil')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Narx')
+    brand = models.ForeignKey(to='Brand', on_delete=models.CASCADE, verbose_name='Ishlab chiqaruvchi brand')
 
 
 class Lease(models.Model):
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    monthly_payment = models.DecimalField(max_digits=10, decimal_places=2)
-    initial_payment = models.DecimalField(max_digits=10, decimal_places=2)
-    contract_months = models.IntegerField()
-    allowed_mileage = models.IntegerField()
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, verbose_name='Arendaga olish')
+    monthly_payment = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Oylik to\'lov')
+    initial_payment = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Boshlang\'ich to\'lov')
+    contract_months = models.IntegerField(verbose_name='Muddat')
+    allowed_mileage = models.IntegerField(verbose_name='Yo\'l qilishga ruxsat berilgan masofa')
 
 
 class Brand(models.Model):
-    brand_name = models.CharField(max_length=255)
-    brand_img = models.ImageField(upload_to='brand_img/')
+    brand_name = models.CharField(max_length=255, verbose_name='Brand nomi')
+    brand_img = models.ImageField(upload_to='brand_img/', verbose_name='Brand rasmi')
 
 
 class GiveawayEntry(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    entry_date = models.DateField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Foydalanuvchi')
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, verbose_name='Avto')
+    entry_date = models.DateField(verbose_name='Kirish sanasi')
